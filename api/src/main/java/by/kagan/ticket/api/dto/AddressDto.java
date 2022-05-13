@@ -1,0 +1,11 @@
+package by.kagan.ticket.api.dto;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
+public class AddressDto {
+}

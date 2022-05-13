@@ -23,10 +23,10 @@ public class Ticket {
 	
 	private int number;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	private List<Flight> flights;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Flight flights;
 	
-	private List<String> flightsIds;
+	private String flightId;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -37,8 +37,6 @@ public class Ticket {
 	
 	@Enumerated(value = EnumType.STRING)
 	private TicketStatus status;
-	
-	private boolean bidirectional;
 	
 	private LocalDateTime created;
 	

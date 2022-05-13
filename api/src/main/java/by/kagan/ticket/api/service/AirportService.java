@@ -3,8 +3,7 @@ package by.kagan.ticket.api.service;
 import by.kagan.ticket.api.domain.Airport;
 import by.kagan.ticket.api.enumeration.ErrorStatusCode;
 import by.kagan.ticket.api.exception.ApiException;
-import by.kagan.ticket.api.filter.ApiFilter;
-import by.kagan.ticket.api.filter.GenericFilter;
+import by.kagan.ticket.api.filter.AirportFilter;
 import by.kagan.ticket.api.repository.AirportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,22 +20,21 @@ public class AirportService implements ApiService<Airport> {
 	
 	@Override
 	public Airport fetchById(String id) {
-		return null;
+		return airportRepository.findById(id).orElseThrow(() -> new ApiException(ErrorStatusCode.OBJECT_NOT_FOUND));
 	}
 	
 	@Override
-	public Set<Airport> fetchByIds(Set<String> ids) {
-		return null;
+	public Iterable<Airport> fetchByIds(Iterable<String> ids) {
+		return airportRepository.findAllById(ids);
 	}
 	
-	@Override
-	public <T extends ApiFilter> Page<Airport> fetchByFilter(GenericFilter<T> filter, Pageable pageable) {
+	public Page<Airport> fetchByFilter(AirportFilter filter, Pageable pageable) {
 		return null;
 	}
 	
 	@Override
 	public Airport create(Airport entity) {
-		return null;
+		return airportRepository.save(entity);
 	}
 	
 	@Override

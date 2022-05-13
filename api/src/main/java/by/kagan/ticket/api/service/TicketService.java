@@ -3,8 +3,7 @@ package by.kagan.ticket.api.service;
 import by.kagan.ticket.api.domain.Ticket;
 import by.kagan.ticket.api.enumeration.ErrorStatusCode;
 import by.kagan.ticket.api.exception.ApiException;
-import by.kagan.ticket.api.filter.ApiFilter;
-import by.kagan.ticket.api.filter.GenericFilter;
+import by.kagan.ticket.api.filter.TicketFilter;
 import by.kagan.ticket.api.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,16 +20,15 @@ public class TicketService implements ApiService<Ticket> {
 	
 	@Override
 	public Ticket fetchById(String id) {
-		return null;
+		return ticketRepository.findById(id).orElseThrow(() -> new ApiException(ErrorStatusCode.OBJECT_NOT_FOUND));
 	}
 	
 	@Override
-	public Set<Ticket> fetchByIds(Set<String> ids) {
-		return null;
+	public Iterable<Ticket> fetchByIds(Iterable<String> ids) {
+		return ticketRepository.findAllById(ids);
 	}
 	
-	@Override
-	public <T extends ApiFilter> Page<Ticket> fetchByFilter(GenericFilter<T> filter, Pageable pageable) {
+	public Page<Ticket> fetchByFilter(TicketFilter filter, Pageable pageable) {
 		return null;
 	}
 	

@@ -10,9 +10,7 @@ import java.util.Set;
 public interface ApiService<E> {
 	E fetchById(String id);
 	
-	Set<E> fetchByIds(Set<String> ids);
-	
-	<T extends ApiFilter> Page<E> fetchByFilter(GenericFilter<T> filter, Pageable pageable);
+	Iterable<E> fetchByIds(Iterable<String> ids);
 	
 	E create(E entity);
 	

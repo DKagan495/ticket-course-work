@@ -1,6 +1,8 @@
 package by.kagan.ticket.api.service;
 
 import by.kagan.ticket.api.domain.Address;
+import by.kagan.ticket.api.enumeration.ErrorStatusCode;
+import by.kagan.ticket.api.exception.ApiException;
 import by.kagan.ticket.api.filter.AddressFilter;
 import by.kagan.ticket.api.filter.ApiFilter;
 import by.kagan.ticket.api.filter.GenericFilter;
@@ -21,16 +23,15 @@ public class AddressService implements ApiService<Address> {
 	
 	@Override
 	public Address fetchById(String id) {
-		return null;
+		return addressRepository.findById(id).orElseThrow(() -> new ApiException(ErrorStatusCode.OBJECT_NOT_FOUND));
 	}
 	
 	@Override
-	public Set<Address> fetchByIds(Set<String> ids) {
-		return null;
+	public Iterable<Address> fetchByIds(Iterable<String> ids) {
+		return addressRepository.findAllById(ids);
 	}
 	
-	@Override
-	public <T extends ApiFilter> Page<Address> fetchByFilter(GenericFilter<T> filter, Pageable pageable) {
+	Page<Address> fetchByFilter(AddressFilter filter, Pageable pageable) {
 		return null;
 	}
 	
@@ -46,9 +47,9 @@ public class AddressService implements ApiService<Address> {
 	
 	@Override
 	public void delete(String id) {
-		addressRepository.findById(id).ifPresent((ticket -> {
-			ticket.setDeleted(LocalDateTime.now());
-			ticketRepository.save(ticket);
+		addressRepository.findById(id).ifPresent((address -> {
+			address.setDeleted(LocalDateTime.now());
+			addressRepository.save(address);
 		}));
 	}
 	

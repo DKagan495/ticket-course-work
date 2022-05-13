@@ -1,11 +1,11 @@
 package by.kagan.ticket.api.domain;
 
-import by.kagan.ticket.api.converter.UserPropertiesJSONConverter;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,8 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
 	@Id
-	@GeneratedValue(generator = "UUID")
-	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	@GeneratedValue
 	private UUID id;
 	
 	private String firstName;
@@ -32,6 +31,10 @@ public class User {
 	private String email;
 	
 	private String phone;
+	
+	private String login;
+	
+	private String password;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "fk_address", insertable = false, updatable = false)

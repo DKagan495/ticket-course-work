@@ -4,17 +4,24 @@ create table "user"
     first_name  varchar(64) not null,
     middle_name varchar(64) not null,
     last_name   varchar(64) not null,
-    birth_date  timestamptz not null,
-    fk_address varchar not null references address(id)
+    birth_date  timestamp   not null,
+    fk_address  varchar     not null references address (id),
+    login       varchar(50) not null,
+    password    varchar     not null,
+    created     timestamp   not null,
+    updated     timestamp   not null,
+    deleted     timestamp
 );
 
 create table airport
 (
     id          uuid primary key,
-    name        varchar not null,
-    description varchar not null,
-    location    varchar not null,
-    deleted     timestamptz
+    name        varchar   not null,
+    description varchar   not null,
+    location    varchar   not null,
+    created     timestamp not null,
+    updated     timestamp not null,
+    deleted     timestamp
 );
 
 create table flight
@@ -22,25 +29,27 @@ create table flight
     id              uuid primary key,
     name            varchar(100) not null,
     description     varchar(500),
-    fk_airport_from varchar      not null references airport(id),
-    fk_airport_to   varchar      not null references airport(id),
+    fk_airport_from varchar      not null references airport (id),
+    fk_airport_to   varchar      not null references airport (id),
     place_amount    int2         not null,
-    departure_time  timestamptz  not null,
-    arrival_time    timestamptz  not null,
+    departure_time  timestamp    not null,
+    arrival_time    timestamp    not null,
     status          varchar      not null,
-    properties      jsonb        not null,
-    deleted         timestamptz
+    created         timestamp    not null,
+    updated         timestamp    not null,
+    deleted         timestamp
 );
 
 create table ticket
 (
     id            uuid primary key,
-    flight_ids    varchar array[2] not null,
+    fk_flight     varchar          not null,
     fk_user       varchar          not null,
     status        varchar          not null,
     bidirectional bool             not null,
-    created       timestamptz      not null,
-    deleted       timestamptz
+    created       timestamp        not null,
+    updated       timestamp        not null,
+    deleted       timestamp
 );
 
 create table address
@@ -52,5 +61,5 @@ create table address
     district varchar(64),
     locality varchar(64) not null,
     street   varchar(64) not null,
-    home     int2        not null
+    home     varchar(16) not null
 )
